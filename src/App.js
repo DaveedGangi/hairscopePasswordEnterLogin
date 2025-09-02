@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { FaLock, FaLockOpen, FaExclamationCircle, FaDoorClosed, FaDoorOpen, FaClock, FaSignOutAlt, FaFlask } from "react-icons/fa";
 import "./App.css";
 
 function App() {
@@ -37,7 +38,7 @@ function App() {
         }, 2000); // wait for doors to fully open
       }, 2000); // wait for lock rotation
     } else {
-      setError("❌ Incorrect password. Try again.");
+      setError("Incorrect password. Try again.");
     }
   };
 
@@ -58,33 +59,55 @@ function App() {
     <div className="App">
       {!isLoggedIn ? (
         <div className="login-container">
-          <h1>🔐 Lab Access</h1>
+          <h1><FaLock /> Lab Access</h1>
+
           <input
             type="password"
             placeholder="Enter password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button onClick={handleLogin}>Enter</button>
-          {error && <p className="error">{error}</p>}
+          <button onClick={handleLogin}>
+            <FaLockOpen style={{ marginRight: "6px" }} /> Enter
+          </button>
+
+          {error && (
+            <p className="error">
+              <FaExclamationCircle style={{ color: "red", marginRight: "6px" }} />
+              {error}
+            </p>
+          )}
 
           {/* Lock Animation */}
-          {showAnimation && <div className="lock-animation">🔒</div>}
+          {showAnimation && (
+            <div className="lock-animation">
+              <FaLock size={40} />
+            </div>
+          )}
 
           {/* Doors */}
           {showAnimation && (
             <div className="doors">
-              <div className={`door door-left ${doorsOpen ? "open" : ""}`} />
-              <div className={`door door-right ${doorsOpen ? "open" : ""}`} />
+              <div className={`door door-left ${doorsOpen ? "open" : ""}`}>
+                <FaDoorClosed size={50} />
+              </div>
+              <div className={`door door-right ${doorsOpen ? "open" : ""}`}>
+                <FaDoorOpen size={50} />
+              </div>
             </div>
           )}
         </div>
       ) : (
         <div className="lab-screen">
-          <h1>Welcome to the Lab 🧪</h1>
-          <p className="timer">Time Remaining: {formatTime(timeLeft)}</p>
+          <h1>
+            Welcome to the Lab <FaFlask />
+          </h1>
+          <p className="timer">
+            <FaClock style={{ marginRight: "6px" }} />
+            Time Remaining: {formatTime(timeLeft)}
+          </p>
           <button className="exit-btn" onClick={handleExit}>
-            Exit
+            <FaSignOutAlt style={{ marginRight: "6px" }} /> Exit
           </button>
         </div>
       )}
